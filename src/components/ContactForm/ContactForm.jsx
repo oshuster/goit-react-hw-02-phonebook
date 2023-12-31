@@ -1,10 +1,12 @@
 import { Component } from 'react';
 
+import css from './contactForm.module.css';
+
 class ContactForm extends Component {
   state = {};
   render() {
     return (
-      <form>
+      <form className={css.save_form}>
         <div className="mb-3">
           <label htmlFor="exampleInputName1" className="form-label">
             Name
