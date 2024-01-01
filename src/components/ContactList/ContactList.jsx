@@ -6,44 +6,33 @@ class ContactList extends Component {
   render() {
     return (
       <>
-        <form className={`d-flex ${css.search_form}`} role="search">
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button className="btn btn-outline-success" type="submit">
-            Search
-          </button>
-        </form>
         <ul className="list-group">
-          <li className={`list-group-item ${css.list_item}`}>
-            An item
+          <li className={css.list_item}>
+            <span className={css.list_title}>An item</span>
             <button type="button" className="btn btn-primary btn-sm">
               Small button
             </button>
           </li>
-          <li className={`list-group-item ${css.list_item}`}>
-            A second item
+          <li className={css.list_item}>
+            <span className={css.list_title}>A second item</span>
             <button type="button" className="btn btn-primary btn-sm">
               Small button
             </button>
           </li>
-          <li className={`list-group-item ${css.list_item}`}>
-            A third item
+          <li className={css.list_item}>
+            <span className={css.list_title}>A third item</span>
             <button type="button" className="btn btn-primary btn-sm">
               Small button
             </button>
           </li>
-          <li className={`list-group-item ${css.list_item}`}>
-            A fourth item
+          <li className={css.list_item}>
+            <span className={css.list_title}>A fourth item</span>
             <button type="button" className="btn btn-primary btn-sm">
               Small button
             </button>
           </li>
-          <li className={`list-group-item ${css.list_item}`}>
-            And a fifth one
+          <li className={css.list_item}>
+            <span className={css.list_title}>And a fifth one</span>
             <button type="button" className="btn btn-primary btn-sm">
               Small button
             </button>
