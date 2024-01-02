@@ -30,6 +30,7 @@ class ContactForm extends Component {
             name="name"
             className="form-control"
             aria-describedby="nameHelp"
+            required
             onChange={this.handleInput}
           />
           <div id="nameHelp" className="form-text">
@@ -46,6 +47,7 @@ class ContactForm extends Component {
             id="exampleInputPhone1"
             name="number"
             onChange={this.handleInput}
+            required
           />
         </div>
         <button type="submit" className="btn btn-primary">

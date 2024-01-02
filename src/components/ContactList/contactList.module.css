@@ -4,6 +4,7 @@
 
 .list_item {
   display: flex;
+  align-items: center;
   padding: var(--bs-list-group-item-padding-y)
     var(--bs-list-group-item-padding-x);
   color: var(--bs-list-group-color);
@@ -23,4 +24,8 @@
 
 .list_title {
   margin-right: auto;
+}
+
+.button {
+  max-height: 32px;
 }

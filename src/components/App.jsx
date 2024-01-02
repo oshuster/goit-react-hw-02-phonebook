@@ -3,60 +3,72 @@ import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import { nanoid } from 'nanoid';
 import Filter from './Filter/Filter';
-// import PhoneBook from './PhoneBook/PhoneBook';
 
 import css from './app.module.css';
 
 class App extends Component {
-  // state = {
-  //   contacts: [],
-  //   filter: '',
-  // };
-
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filteredContacts: [],
     filter: '',
   };
 
-  fetchContact = contact => {
-    const currentContacts = this.state.contacts;
-    this.setState({
-      contacts: [...currentContacts, { id: nanoid(), ...contact }],
-    });
+  regExpPattern = {
+    name: new RegExp(
+      "^[a-zA-Zа-яА-Я]+(([' \\-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+    ),
+    number: new RegExp(
+      '\\+?\\d{1,4}?[ .\\-\\s]?\\(?\\d{1,3}?\\)?[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,9}'
+    ),
+  };
+
+  fetchContact = ({ name, number }) => {
+    const { contacts } = this.state;
+    // перевірка на коректність введених даних
+    if (
+      this.regExpPattern.name.test(name) &&
+      this.regExpPattern.number.test(number)
+    ) {
+      // перевірка на наявність контакту по номеру
+      if (!contacts.some(contact => contact.number === number)) {
+        this.setState({
+          contacts: [...contacts, { id: nanoid(), name, number }],
+        });
+      } else {
+        alert('Такий контакт вже існує');
+        return;
+      }
+    } else {
+      alert('Введені дані некоректні');
+      return;
+    }
   };
   deleteContact = id => {
-    const contactList = this.state.contacts;
-    const newList = contactList.filter(contact => contact.id !== id);
-    this.setState({ contacts: newList });
-    //видалення в фільтрах. Треба оптимізувати
-    const filterList = this.state.filteredContacts;
-    const newFilteredList = filterList.filter(contact => contact.id !== id);
-    this.setState({ filteredContacts: newFilteredList });
-  };
+    const { contacts } = this.state;
+    const newList = contacts.filter(contact => contact.id !== id);
 
-  findContact = value => {
-    this.setState({ filter: `${value}` });
-    const contactList = this.state.contacts;
-    // contactList.filter(contact => contact.name.includes(value));
-    const result = contactList.filter(contact =>
-      contact.name.toLowerCase().includes(value)
+    const { filteredContacts } = this.state;
+    const newFilteredList = filteredContacts.filter(
+      contact => contact.id !== id
     );
-    this.setState({ filteredContacts: result });
-
-    console.log(value);
-    console.log(result);
+    this.setState({ contacts: newList, filteredContacts: newFilteredList });
   };
+
+  findContact = contactName => {
+    const { contacts } = this.state;
+    const sortedContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(contactName)
+    );
+    this.setState({
+      filteredContacts: sortedContacts,
+      filter: `${contactName}`,
+    });
+  };
+
   render() {
     return (
       <div className={css.container}>
         <h1>Phonebook</h1>
-        {/* <PhoneBook /> */}
         <ContactForm fetchContact={this.fetchContact} />
         <h2>Contacts</h2>
         <Filter findContact={this.findContact} />

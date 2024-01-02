@@ -8,25 +8,23 @@ class ContactList extends Component {
     this.props.deleteContact(id);
   };
   render() {
-    const items = this.props.contactlist;
-    const elements = items.map(contact => (
+    const { contactlist } = this.props;
+    const elements = contactlist.map(contact => (
       <li key={contact.id} className={css.list_item}>
-        <span className={css.list_title}>{contact.name}</span>
+        <span className={css.list_title}>
+          {contact.name}: {contact.number}
+        </span>
         <button
           data-id={contact.id}
           type="button"
-          className="btn btn-primary btn-sm"
+          className={`btn btn-primary btn-sm ${css.button}`}
           onClick={this.getId}
         >
           Delete
         </button>
       </li>
     ));
-    return (
-      <>
-        <ul className="list-group">{elements}</ul>
-      </>
-    );
+    return <ul className="list-group">{elements}</ul>;
   }
 }
 

@@ -5,8 +5,8 @@ class Filter extends Component {
   state = {};
 
   filterValue = e => {
-    const value = e.target.value.toLowerCase().trim();
-    this.props.findContact(value);
+    const contactName = e.target.value.toLowerCase().trim();
+    this.props.findContact(contactName);
   };
 
   render() {
@@ -23,15 +23,3 @@ class Filter extends Component {
 }
 
 export default Filter;
-
-// <form className={`d-flex ${css.search_form}`} role="search">
-//   <input
-//     className="form-control me-2"
-//     type="search"
-//     placeholder="Search"
-//     aria-label="Search"
-//   />
-//   <button className="btn btn-outline-success" type="submit">
-//     Search
-//   </button>
-// </form>;
