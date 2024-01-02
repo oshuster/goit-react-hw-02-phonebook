@@ -20,6 +20,7 @@ class App extends Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
+    filteredContacts: [],
     filter: '',
   };
 
@@ -33,12 +34,22 @@ class App extends Component {
     const contactList = this.state.contacts;
     const newList = contactList.filter(contact => contact.id !== id);
     this.setState({ contacts: newList });
+    //видалення в фільтрах. Треба оптимізувати
+    const filterList = this.state.filteredContacts;
+    const newFilteredList = filterList.filter(contact => contact.id !== id);
+    this.setState({ filteredContacts: newFilteredList });
   };
 
   findContact = value => {
-    //потрібно змінювати стейт і з еього брати повне значення
+    this.setState({ filter: `${value}` });
     const contactList = this.state.contacts;
-    const result = contactList.filter(contact => contact.name.includes(value));
+    // contactList.filter(contact => contact.name.includes(value));
+    const result = contactList.filter(contact =>
+      contact.name.toLowerCase().includes(value)
+    );
+    this.setState({ filteredContacts: result });
+
+    console.log(value);
     console.log(result);
   };
   render() {
@@ -50,7 +61,11 @@ class App extends Component {
         <h2>Contacts</h2>
         <Filter findContact={this.findContact} />
         <ContactList
-          contactlist={this.state.contacts}
+          contactlist={
+            !this.state.filter
+              ? this.state.contacts
+              : this.state.filteredContacts
+          }
           deleteContact={this.deleteContact}
         />
       </div>
