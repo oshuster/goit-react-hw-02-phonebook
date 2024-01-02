@@ -5,7 +5,8 @@ class Filter extends Component {
   state = {};
 
   filterValue = e => {
-    console.log(e.target.value);
+    const value = e.target.value.toLowerCase().trim();
+    this.props.findContact(value);
   };
 
   render() {

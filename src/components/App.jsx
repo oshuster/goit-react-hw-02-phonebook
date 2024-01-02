@@ -31,13 +31,15 @@ class App extends Component {
   };
   deleteContact = id => {
     const contactList = this.state.contacts;
-    // const newList = contactList.splice(contactList.indexOf(id), 1);
     const newList = contactList.filter(contact => contact.id !== id);
-
-    console.log('id', id);
-    console.log('contactList', contactList);
-    console.log('newList', newList);
     this.setState({ contacts: newList });
+  };
+
+  findContact = value => {
+    //потрібно змінювати стейт і з еього брати повне значення
+    const contactList = this.state.contacts;
+    const result = contactList.filter(contact => contact.name.includes(value));
+    console.log(result);
   };
   render() {
     return (
@@ -46,7 +48,7 @@ class App extends Component {
         {/* <PhoneBook /> */}
         <ContactForm fetchContact={this.fetchContact} />
         <h2>Contacts</h2>
-        <Filter />
+        <Filter findContact={this.findContact} />
         <ContactList
           contactlist={this.state.contacts}
           deleteContact={this.deleteContact}
