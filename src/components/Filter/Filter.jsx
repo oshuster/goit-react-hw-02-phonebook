@@ -2,8 +2,6 @@ import { Component } from 'react';
 import css from './filter.module.css';
 
 class Filter extends Component {
-  state = {};
-
   filterValue = e => {
     const contactName = e.target.value.toLowerCase().trim();
     this.props.findContact(contactName);

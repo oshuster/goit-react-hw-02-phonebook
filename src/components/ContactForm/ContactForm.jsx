@@ -12,15 +12,20 @@ class ContactForm extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
-  saveContact = e => {
+  handleSubmit = e => {
     e.preventDefault();
-    this.props.fetchContact(this.state);
-    e.target.reset();
+    this.props.saveContact(this.state);
+    console.log(this.state);
+    this.setState({
+      name: '',
+      number: '',
+    });
   };
 
   render() {
+    const { name, number } = this.state;
     return (
-      <form className={css.save_form} onSubmit={this.saveContact}>
+      <form className={css.save_form} onSubmit={this.handleSubmit}>
         <div className="mb-3">
           <label htmlFor="exampleInputName1" className="form-label">
             Name
@@ -28,6 +33,7 @@ class ContactForm extends Component {
           <input
             type="text"
             name="name"
+            value={name}
             className="form-control"
             aria-describedby="nameHelp"
             required
@@ -46,6 +52,7 @@ class ContactForm extends Component {
             className="form-control"
             id="exampleInputPhone1"
             name="number"
+            value={number}
             onChange={this.handleInput}
             required
           />

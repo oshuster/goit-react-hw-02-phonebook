@@ -2,7 +2,6 @@ import { Component } from 'react';
 import css from './contactList.module.css';
 
 class ContactList extends Component {
-  state = {};
   getId = e => {
     const id = e.target.dataset.id;
     this.props.deleteContact(id);
