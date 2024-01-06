@@ -3,8 +3,8 @@ import css from './filter.module.css';
 
 class Filter extends Component {
   filterValue = e => {
-    const contactName = e.target.value.toLowerCase().trim();
-    this.props.findContact(contactName);
+    const key = e.target.value.toLowerCase().trim();
+    this.props.filterKey(key);
   };
 
   render() {

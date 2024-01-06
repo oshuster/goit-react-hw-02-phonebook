@@ -9,7 +9,6 @@ import css from './app.module.css';
 class App extends Component {
   state = {
     contacts: [],
-    filteredContacts: [],
     filter: '',
   };
 
@@ -43,26 +42,26 @@ class App extends Component {
       return;
     }
   };
+
   deleteContact = id => {
     const { contacts } = this.state;
     const newList = contacts.filter(contact => contact.id !== id);
-
-    const { filteredContacts } = this.state;
-    const newFilteredList = filteredContacts.filter(
-      contact => contact.id !== id
-    );
-    this.setState({ contacts: newList, filteredContacts: newFilteredList });
+    this.setState({ contacts: [...newList] });
   };
 
-  findContact = contactName => {
-    const { contacts } = this.state;
-    const sortedContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(contactName)
-    );
-    this.setState({
-      filteredContacts: sortedContacts,
-      filter: `${contactName}`,
-    });
+  getFilteredContacts = () => {
+    const { contacts, filter: filterKey } = this.state;
+    if (!filterKey) {
+      return contacts;
+    } else {
+      return contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filterKey)
+      );
+    }
+  };
+
+  filterKey = key => {
+    this.setState({ filter: `${key}` });
   };
 
   render() {
@@ -71,13 +70,9 @@ class App extends Component {
         <h1>Phonebook</h1>
         <ContactForm saveContact={this.saveContact} />
         <h2>Contacts</h2>
-        <Filter findContact={this.findContact} />
+        <Filter filterKey={this.filterKey} />
         <ContactList
-          contactlist={
-            !this.state.filter
-              ? this.state.contacts
-              : this.state.filteredContacts
-          }
+          contactlist={this.getFilteredContacts()}
           deleteContact={this.deleteContact}
         />
       </div>
